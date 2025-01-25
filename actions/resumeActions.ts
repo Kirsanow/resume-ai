@@ -1,10 +1,8 @@
 "use server";
-import { eq, not } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db/drizzle";
 import { resumes } from "@/db/schema";
-import { auth } from "@/lib/auth";
-import { z } from "zod";
 import { redirect } from "next/navigation";
 import { getQueryClient } from "@/lib/getQueryClient";
 
