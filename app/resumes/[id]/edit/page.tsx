@@ -10,9 +10,11 @@ import {
   Type,
   Grid,
 } from "lucide-react";
+import { useParams } from "next/navigation";
 
-export default function ResumeEditPage({ params }: { params: { id: string } }) {
+export default function ResumeEditPage() {
   const [scale, setScale] = useState(1);
+  const params = useParams();
 
   const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.1, 2));
   const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.5));
