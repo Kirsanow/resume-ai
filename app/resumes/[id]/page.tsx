@@ -1,5 +1,10 @@
 import { redirect } from "next/navigation";
 
-export default function ResumePage({ params }: { params: { id: string } }) {
-  redirect(`/resumes/${params.id}/edit`);
+export default async function ResumePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const resolvedParams = await params;
+  redirect(`/resumes/${resolvedParams.id}/edit`);
 }
