@@ -1,12 +1,9 @@
-import Hero from "@/components/marketing/hero";
-export const dynamic = "force-dynamic";
+import WithLargeScreenshot from "@/components/marketing/with-large-screenshot";
 
 export default async function Home() {
   return (
-    <div>
-      <main>
-        <Hero />
-      </main>
-    </div>
+    <main>
+      <WithLargeScreenshot />
+    </main>
   );
 }

@@ -6,6 +6,7 @@ import { resumes } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import { getQueryClient } from "@/lib/getQueryClient";
 
 export const getData = async () => {
   const data = await db.select().from(resumes);
@@ -13,6 +14,7 @@ export const getData = async () => {
 };
 
 export async function createResume() {
+  const queryClient = getQueryClient();
   // const session = await auth();
   // if (!session?.user?.id) {
   //   throw new Error("Unauthorized: Must be logged in to create a resume");
@@ -29,5 +31,17 @@ export async function createResume() {
     })
     .returning();
 
+  await queryClient.invalidateQueries({ queryKey: ["resumes"] });
+
+  revalidatePath("/resumes");
+
   return redirect(`/resumes/${newResume.id}/edit`);
+}
+
+export async function deleteResume(id: string) {
+  const queryClient = getQueryClient();
+
+  await db.delete(resumes).where(eq(resumes.id, id));
+  revalidatePath("/resumes");
+  await queryClient.invalidateQueries({ queryKey: ["resumes"] });
 }
