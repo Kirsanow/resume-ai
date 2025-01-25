@@ -1,15 +1,15 @@
 "use client";
 
-import { deleteResume, getData } from "@/actions/resumeActions";
-import { Resume } from "@/types/resumeTypes";
+import { deleteResume } from "@/actions/resumeActions";
 import { useQuery } from "@tanstack/react-query";
+import { getResumes } from "../_queries";
 
-export default function ResumesList() {
-  const { data: resumes, isLoading } = useQuery({
+export default function ResumesList({ resumes }: { resumes: any[] }) {
+  const { data: resumesData, isLoading } = useQuery({
     queryKey: ["resumes"],
-    queryFn: async () => await getData(),
+    queryFn: async () => await getResumes(),
 
-    // initialData: resumes,
+    initialData: resumes,
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -28,7 +28,7 @@ export default function ResumesList() {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
-          {resumes?.map((resume) => (
+          {resumesData?.map((resume) => (
             <tr key={resume.id} className="hover:bg-gray-50">
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                 {resume.title}
